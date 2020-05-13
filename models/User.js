@@ -21,6 +21,9 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Debes agregar un contraseña"],
   },
+  location: {
+    type: String,
+  }
 });
 
 module.exports = model("User", userSchema);
