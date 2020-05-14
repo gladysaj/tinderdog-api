@@ -4,15 +4,15 @@ const { Schema } = mongoose;
 const matchSchema = new Schema({
   idRequesterDog: {
     type: Schema.Types.ObjectId,
-    ref: "Dog.js",
+    ref: "Dog",
   },
   idRequestedDog: {
     type: Schema.Types.ObjectId,
-    ref: "Dog.js",
+    ref: "Dog",
   },
-  idMatch: {
+  match: {
     type: Schema.Types.ObjectId,
-    ref: "Dog.js",
+    ref: "Dog",
   },
   status: {
     enum: ["Like", "Dislike", "Pending"],
