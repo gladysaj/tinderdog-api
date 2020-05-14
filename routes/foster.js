@@ -4,7 +4,7 @@ const Foster = require("../models/Foster");
 
 
 // GET all the dogs by user
-router.get("/foster", (req, res) => {
+router.get("/", (req, res) => {
   const { _id } = req.name;
   Foster.find({ foster: _id })
     .populate({
