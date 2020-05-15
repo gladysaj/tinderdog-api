@@ -32,10 +32,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Define routes
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const fosterRouter = require('./routes/foster')
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/foster', fosterRouter);
 
 module.exports = app;
