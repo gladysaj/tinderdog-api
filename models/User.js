@@ -17,13 +17,31 @@ const userSchema = new Schema({
       },
     },
   },
+  phoneNumber: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    minlength: [50, "Description must be min 50 characters"],
+  },
   password: {
     type: String,
     required: [true, "Debes agregar un contraseña"],
   },
   location: {
-    type: String,
+    type: {
+        type: String,
+        enum: ['Point'],
+        required: [true, "Must specify a point"]
+    },
+    coordinates: {
+        type: Number,
+        required: [true, "Must specify coordinates"]
+    }
   }
-});
+},
+{ timestamps: true }
+);
 
 module.exports = model("User", userSchema);

@@ -19,6 +19,8 @@ const matchSchema = new Schema({
     type: String,
     default: "Pending",
   },
-});
+},
+{ timestamps: true }
+);
 
 module.exports = mongoose.model("Match", matchSchema);
