@@ -23,6 +23,15 @@ console.log(`Connected to mongo! database name: "${x.connections[0].name}"`)
 
 const app = express();
 
+/* UNCOMMENT THIS ONCE CORS ARE INSTALLED
+app.use(
+  cors({
+    origin: ["http://localhost:3001", "https://i-dog.herokuapp.com/"],
+    credentials: true
+  })
+);
+*/
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,7 +42,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// All routes must start with "/api"
+app.use('/api/', indexRouter);
+app.use('/api/users', usersRouter);
+
+// If express doesn't find the route, send the index.html
+app.use("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 module.exports = app;
