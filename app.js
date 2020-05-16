@@ -6,8 +6,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const cors = require('cors')
 
 // Add Mongoose Connections
 const mongoose = require("mongoose")
@@ -23,14 +22,13 @@ console.log(`Connected to mongo! database name: "${x.connections[0].name}"`)
 
 const app = express();
 
-/* UNCOMMENT THIS ONCE CORS ARE INSTALLED
+
 app.use(
   cors({
     origin: ["http://localhost:3001", "https://i-dog.herokuapp.com/"],
     credentials: true
   })
 );
-*/
 
 app.use(logger('dev'));
 app.use(express.json());
