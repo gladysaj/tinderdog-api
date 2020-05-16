@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "prebuild": "cd ../tinderdog-frontend && yarn build",
-    "build": "cp -r ../tinderdog-frontend/build/ public/"
+    "predeploy": "cd ../tinderdog-frontend && yarn build",
+    "deploy": "cp -r ../tinderdog-frontend/build/ public/"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
