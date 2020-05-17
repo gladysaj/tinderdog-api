@@ -5,7 +5,8 @@ const dogSchema = new Schema(
     {
         owner: {
             type: Schemas.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            required: [true, "A dog must have an owner"],
         },
         foster: {
             type: Boolean,
@@ -18,9 +19,17 @@ const dogSchema = new Schema(
         breed: {
             type: String,
             enum: [
-                "German Sheperd",
-                "French Bulldog",
-                "Mixed"
+                "Mixed",
+                "Chihuahua",
+                "Dachshund",
+                "German Shepherd",
+                "Golden Retriever",
+                "Labrador Retriever",
+                "Schnauzer",
+                "Shiba Inu",
+                "Siberian Husky",
+                "Xoloitzcuintli",
+                "Yorkshire Terrier",
             ],
             default: ["Mixed"],
             required: [true, "A dog must have a breed"]

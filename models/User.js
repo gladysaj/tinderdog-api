@@ -18,8 +18,9 @@ const userSchema = new Schema({
     },
   },
   phoneNumber: {
-    type: String,
-    required: true
+    type: Number,
+    minlength: [10, "Phone number must have 10 digits"],
+    required: true,
   },
   description: {
     type: String,
@@ -36,7 +37,7 @@ const userSchema = new Schema({
         required: [true, "Must specify a point"]
     },
     coordinates: {
-        type: Number,
+        type: [Number],
         required: [true, "Must specify coordinates"]
     }
   }
