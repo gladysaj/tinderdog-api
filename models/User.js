@@ -30,15 +30,16 @@ const userSchema = new Schema({
     type: String,
     required: [true, "Debes agregar un contraseña"],
   },
+  // more info on GeoJSON https://mongoosejs.com/docs/geojson.html
   location: {
     type: {
-        type: String,
-        enum: ['Point'],
-        required: [true, "Must specify a point"]
+      type: String,
+      enum: ['Point'],
+      required: [true, "Location type must be Point"],
     },
     coordinates: {
-        type: [Number],
-        required: [true, "Must specify coordinates"]
+      type: [Number],
+      required: [true, "Coordinates must contain lat and long in numbers"],
     }
   }
 },

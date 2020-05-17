@@ -10,7 +10,7 @@ router.post("/signup", (req, res) => {
 
   bcrypt.hash(password, 10).then((hashedPassword) => {
     const user = { ...userValues, password: hashedPassword };
-    
+
     User.create(user)
       .then(() => {
         res.status(201).json({ msg: "User successfully created" });
