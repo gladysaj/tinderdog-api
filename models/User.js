@@ -4,13 +4,13 @@ const { Schema, model } = mongoose;
 const userSchema = new Schema({
   name: {
     type: String,
-    required: [true, "Debes agregar un nombre"],
+    required: [true, "You should add a name"],
   },
   email: {
     type: String,
-    required: [true, "Debes agregar un email"],
+    required: [true, "You should add an email address"],
     validate: {
-      message: "El email ya está en uso",
+      message: "Email address is already in use",
       validator: async (email) => {
         const items = await mongoose.models["User"].count({ email });
         return items < 1;
@@ -28,7 +28,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    required: [true, "Debes agregar un contraseña"],
+    required: [true, "You should add a password"],
   },
   // more info on GeoJSON https://mongoosejs.com/docs/geojson.html
   location: {
