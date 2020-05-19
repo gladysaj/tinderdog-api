@@ -19,9 +19,42 @@ router.post("/signup", (req, res) => {
   });
 });
 
+// User Login 
+router.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  User.findOne({ email }).then((user) => {
+    if (user === null) return res.status(404).json({ msg: "Invalid email" });
+
+    bcrypt.compare(password, user.password).then((match) => {
+      if (match) {
+        const userWithoutPassword = user.toObject();
+        delete userWithoutPassword.password;
+        const token = jwt.sign({ id: user._id }, process.env.SECRET, {
+          expiresIn: "1d",
+        });
+        res
+          .cookie("token", token, {
+            expires: new Date(Date.now() + 86400000),
+            secure: false,
+            httpOnly: true,
+          })
+          .json({ user: userWithoutPassword });
+      } else {
+         return res.status(401).json({ msg: "Invalid password"});
+      }
+    });
+  }) .catch((err) => res.status(400).json({ err }));
+});
+
+// User Logout
+router.post("/logout", (req, res) => {
+  res.clearCookie("token").json({ msg: "Logout" });
+});
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  res.send('Respond with a resource');
 });
 
 module.exports = router;
