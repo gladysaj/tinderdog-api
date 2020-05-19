@@ -5,7 +5,6 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
 const cors = require('cors')
 
 // Add Mongoose Connections
@@ -42,7 +41,7 @@ const usersRouter = require('./routes/user');
 
 // All routes must start with "/api"
 app.use('/api/', indexRouter);
-app.use('/api/users', usersRouter);
+app.use('/api/', usersRouter);
 
 // If express doesn't find the route, send the index.html
 app.use("*", (req, res) => {
