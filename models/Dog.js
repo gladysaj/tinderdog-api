@@ -4,13 +4,14 @@ const { Schema, model } = mongoose;
 const dogSchema = new Schema(
     {
         owner: {
-            type: Schemas.Types.ObjectId,
+            type: Schema.Types.ObjectId,
             ref: "User",
             required: [true, "A dog must have an owner"],
         },
         foster: {
             type: Boolean,
-            default: false
+            default: false,
+            required: [true, "Must specify the type of dog"],
         },
         name: {
             type: String,
@@ -31,12 +32,12 @@ const dogSchema = new Schema(
                 "Xoloitzcuintli",
                 "Yorkshire Terrier",
             ],
-            default: ["Mixed"],
+            default: "Mixed",
             required: [true, "A dog must have a breed"]
         },
         age: {
-            type: Number,
-            max: 20,
+            type: String,
+            enum: ["Puppy", "Adult", "Senior"],
             required: [true, "Must speficy an age"]
         },
         gender: {
@@ -57,7 +58,7 @@ const dogSchema = new Schema(
             minlength: [50, "Description must be min 50 characters"],
         },
         likes: {
-            type: [Schemas.Types.ObjectId]
+            type: [Schema.Types.ObjectId]
         }
     },
     { timestamps: true }

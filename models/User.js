@@ -30,6 +30,9 @@ const userSchema = new Schema({
     type: String,
     required: [true, "You should add a password"],
   },
+  avatar: {
+    type: String
+  },
   // more info on GeoJSON https://mongoosejs.com/docs/geojson.html
   location: {
     type: {
