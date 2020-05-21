@@ -9,7 +9,7 @@ const cors = require('cors')
 
 // Add Mongoose Connections
 const mongoose = require("mongoose")
-mongoose.connect("mongodb://localhost/tinderdog-backend", {
+mongoose.connect(process.env.DB, {
   useCreateIndex: true,
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -38,10 +38,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Define routes
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/user');
+const dogsRouter = require('./routes/dog');
+const exchangesRouter = require('./routes/exchange');
 
 // All routes must start with "/api"
 app.use('/api/', indexRouter);
-app.use('/api/', usersRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/dogs', dogsRouter);
+app.use('/api/matches', exchangesRouter);
 
 // If express doesn't find the route, send the index.html
 app.use("*", (req, res) => {

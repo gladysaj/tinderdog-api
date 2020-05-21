@@ -1,5 +1,6 @@
 const express = require("express");
-const router = express.router();
+//aqui solo cambie express.router por express.Router
+const router = express.Router();
 const Dog = require("../models/Dog");
 const { veryToken } = require("../utils/auth");
 
