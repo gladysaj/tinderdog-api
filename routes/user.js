@@ -19,32 +19,6 @@ router.post("/signup", (req, res) => {
   });
 });
 
-// Log in
-router.post("/login", (req, res) => {
-  const { email, password } = req.body;
-
-  User.findOne({ email }).then((user) => {
-    if (user === null) return res.status(404).json({ msg: "Email no existe" });
-
-    bcrypt.compare(password, user.password).then((match) => {
-      if (match) {
-        const userObject = user.toObject();
-        delete userObject.password;
-        const token = jwt.sign({ id: user._id }, process.env.SECRET, {
-          expiresIn: "1d",
-        });
-        res
-          .cookie("token", token, {
-            expires: new Date(Date.now() + 86400000),
-            secure: false,
-            httpOnly: true,
-          })
-          .json({ user: userObject });
-      }
-    });
-  });
-});
-
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');

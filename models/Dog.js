@@ -36,8 +36,8 @@ const dogSchema = new Schema(
             required: [true, "A dog must have a breed"]
         },
         age: {
-            type: Number,
-            max: 20,
+            type: String,
+            enum: ["Puppy", "Adult", "Senior"],
             required: [true, "Must speficy an age"]
         },
         gender: {
