@@ -47,7 +47,7 @@ app.use('/api/', indexRouter);
 app.use('/api/', usersRouter);
 app.use('/api/', likesRouter);
 app.use('/api/', dislikesRouter);
-app.use('/api/foster', dogsRouter);
+app.use('/api/', dogsRouter);
 
 // If express doesn't find the route, send the index.html
 app.use("*", (req, res) => {

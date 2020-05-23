@@ -4,7 +4,7 @@ const Dog = require("../models/Dog");
 const { veryToken } = require("../utils/auth");
 
 // Create dog
-router.post("/", veryToken, (req, res) => {
+router.post("/dog", veryToken, (req, res) => {
   const { _id: owner } = req.user;
 
   Dog.create({ ...req.body, owner })
