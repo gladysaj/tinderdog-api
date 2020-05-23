@@ -58,6 +58,9 @@ const dogSchema = new Schema({
   },
   likes: {
     type: [Schema.Types.ObjectId]
+  },
+  dislikes: {
+    type: [Schema.Types.ObjectId],
   }
 }, { timestamps: true });
 
