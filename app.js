@@ -38,11 +38,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Define routes
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/user');
-const dogsRouter = require('./routes/dog')
+const dogsRouter = require('./routes/dog');
+const likesRouter = require('./routes/like');
+const dislikesRouter = require('./routes/dislike');
 
 // All routes must start with "/api"
 app.use('/api/', indexRouter);
 app.use('/api/', usersRouter);
+app.use('/api/', likesRouter);
+app.use('/api/', dislikesRouter);
 app.use('/api/foster', dogsRouter);
 
 // If express doesn't find the route, send the index.html
