@@ -14,7 +14,7 @@ router.post("/", veryToken, (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
-// Request dog
+// Request a dog
 router.get("/:id", veryToken, (req, res) => {
   const { id } = req.params;
 
@@ -24,6 +24,14 @@ router.get("/:id", veryToken, (req, res) => {
       res.status(200).json({ result: dog });
     })
     .catch((err) => res.status(400).json(err));
+});
+
+// Request all dogs
+router.get('/', veryToken, (req, res) => {
+  // populate adds the user object to the dog. "Name" specifies that we only want to bring that key
+  Dog.find().populate('owner', 'name avatar').then(dogs => {
+      res.status(200).json({ results: dogs })
+  }).catch(err => res.status(400).json(err))
 });
 
 // Update dog
