@@ -16,7 +16,7 @@ router.post("/like", (req, res) => {
      const likesMe = result.likes.indexOf(id) > -1;
      if (likesMe === true) {
        // Si le gusto entonces ambos nos gustamos, crearemos el match aquí
-       Match.create({ dogOne, dogTwo }).then(() => {
+       Match.create({ dogs: [id, myDogId] }).then(() => {
         res.json({ msg: 'Match created' });
       }).catch(err => {
         res.status(400).send(err);
