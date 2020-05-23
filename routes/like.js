@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Dog = require('../models/Dog');
+const Match = require('../models/Match');
 
 router.post("/like", (req, res) => {
   // 1. Toma el modelo de Dog y busca el dog con el id al que le estas dando like
@@ -15,7 +16,11 @@ router.post("/like", (req, res) => {
      const likesMe = result.likes.indexOf(id) > -1;
      if (likesMe === true) {
        // Si le gusto entonces ambos nos gustamos, crearemos el match aquí
-       res.json({ msg: 'Match created' });
+       Match.create({ dogOne, dogTwo }).then(() => {
+        res.json({ msg: 'Match created' });
+      }).catch(err => {
+        res.status(400).send(err);
+      });
      } else {
       // Si no, entonces simplemente le di like
       res.json({ msg: 'Liked' });
