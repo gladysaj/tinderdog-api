@@ -41,12 +41,14 @@ const usersRouter = require('./routes/user');
 const dogsRouter = require('./routes/dog');
 const likesRouter = require('./routes/like');
 const dislikesRouter = require('./routes/dislike');
+const matchesRouter = require('./routes/match');
 
 // All routes must start with "/api"
 app.use('/api/', indexRouter);
 app.use('/api/', usersRouter);
 app.use('/api/', likesRouter);
 app.use('/api/', dislikesRouter);
+app.use('/api/', matchesRouter);
 app.use('/api/', dogsRouter);
 
 // If express doesn't find the route, send the index.html
