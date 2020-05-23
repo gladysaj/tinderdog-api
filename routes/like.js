@@ -11,7 +11,7 @@ router.post("/like", (req, res) => {
   Dog.findByIdAndUpdate(id, { $push: { likes: myDogId } }, { returnOriginal: false }).then(result => {
     // 3. Checa si ese perro te ha dado like a ti (a tu perro) buscando el id del perro
     // al que le estas dando like, en tus "likes" properties
-    Dog.findById(myDogId).then(result => {
+    Dog.findByIdAndUpdate(myDogId, { $push: { myLikes: id } }).then(result => {
     // Le gusto al perro que le di like?
      const likesMe = result.likes.indexOf(id) > -1;
      if (likesMe === true) {

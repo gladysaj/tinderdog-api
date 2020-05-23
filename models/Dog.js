@@ -59,7 +59,10 @@ const dogSchema = new Schema({
   likes: {
     type: [Schema.Types.ObjectId]
   },
-  dislikes: {
+  myLikes: {
+    type: [Schema.Types.ObjectId],
+  },
+  myDislikes: {
     type: [Schema.Types.ObjectId],
   }
 }, { timestamps: true });
