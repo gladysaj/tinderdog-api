@@ -43,7 +43,7 @@ const dogsRouter = require('./routes/dog')
 // All routes must start with "/api"
 app.use('/api/', indexRouter);
 app.use('/api/', usersRouter);
-app.use('/api/', dogsRouter);
+app.use('/api/foster', dogsRouter);
 
 // If express doesn't find the route, send the index.html
 app.use("*", (req, res) => {
