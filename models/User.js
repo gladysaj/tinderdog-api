@@ -18,7 +18,7 @@ const userSchema = new Schema({
     },
   },
   phoneNumber: {
-    type: Number,
+    type: String,
     minlength: [10, "Phone number must have 10 digits"],
     required: true,
   },
@@ -38,15 +38,13 @@ const userSchema = new Schema({
     type: {
       type: String,
       enum: ['Point'],
-      required: [true, "Location type must be Point"],
+      // required: [true, "Location type must be Point"],
     },
     coordinates: {
       type: [Number],
-      required: [true, "Coordinates must contain lat and long in numbers"],
+      // required: [true, "Coordinates must contain lat and long in numbers"],
     }
   }
-},
-{ timestamps: true }
-);
+}, { timestamps: true });
 
 module.exports = model("User", userSchema);
