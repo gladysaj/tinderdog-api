@@ -24,7 +24,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://i-dog.herokuapp.com/"],
+    origin: ["http://localhost:3001", "https://i-dog.herokuapp.com/"],
     credentials: true
   })
 );

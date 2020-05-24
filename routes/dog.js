@@ -17,6 +17,7 @@ router.post("/dog", veryToken, (req, res) => {
 // Request all dogs
 router.get('/dogs', veryToken, (req, res) => {
   const { _id: id } = req.user;
+  // const id = "5ec86db08566bc04073f06a5";
 
   Dog.findOne({ owner: id }).then(result => {
     const myDog = result;
