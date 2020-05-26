@@ -14,16 +14,32 @@ router.post("/dog", veryToken, (req, res) => {
     .catch((err) => res.status(400).json(err));
 });
 
-// Request all dogs
-router.get('/dogs', veryToken, (req, res) => {
+// Request all dogs for match
+router.get('/match', veryToken, (req, res) => {
   const { _id: id } = req.user;
-  // const id = "5ec86db08566bc04073f06a5";
-
   Dog.findOne({ owner: id }).then(result => {
     const myDog = result;
     const myLikes = myDog.myLikes;
     const myDislikes = myDog.myDislikes;
     Dog.find({ "_id": { $nin: [...myLikes, ...myDislikes, myDog._id] } }).then(result => {
+      res.send(result);
+    }).catch(err => res.status(400).json({ error: err }));
+  }).catch(err => res.status(400).json({ error: err }));
+});
+
+// Request all dogs for foster
+router.get('/foster', veryToken, (req, res) => {
+  const { _id: id } = req.user;
+  Dog.findOne({ owner: id }).then(result => {
+    const myDog = result;
+    const myLikes = myDog.myLikes;
+    const myDislikes = myDog.myDislikes;
+    Dog.find({
+      $and: [
+        { foster: true },
+        { _id: { $nin: [...myLikes, ...myDislikes, myDog._id] } },
+      ],
+    }).then(result => {
       res.send(result);
     }).catch(err => res.status(400).json({ error: err }));
   }).catch(err => res.status(400).json({ error: err }));
