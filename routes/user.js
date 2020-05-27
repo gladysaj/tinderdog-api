@@ -1,8 +1,10 @@
 var express = require("express");
 var router = express.Router();
 const User = require("../models/User");
+const Dog = require("../models/Dog");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { veryToken } = require("../utils/auth");
 
 // Create user
 router.post("/signup", (req, res) => {
@@ -52,9 +54,13 @@ router.post("/logout", (req, res) => {
   res.clearCookie("token").json({ msg: "Logout" });
 });
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('Respond with a resource');
+// Get de user dogs
+router.get('/find-dog', veryToken, function(req, res, next) {
+  const { _id: id } = req.user;
+
+  Dog.find({ owner: id }).then(dogs => {
+    res.status(200).json({dogs})
+  }).catch(err => res.status(400).json({ err }));
 });
 
 module.exports = router;

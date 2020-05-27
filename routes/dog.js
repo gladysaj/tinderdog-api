@@ -17,10 +17,12 @@ router.post("/dog", veryToken, (req, res) => {
 // Request all dogs for match
 router.get('/match', veryToken, (req, res) => {
   const { _id: id } = req.user;
+
   Dog.findOne({ owner: id }).then(result => {
     const myDog = result;
     const myLikes = myDog.myLikes;
     const myDislikes = myDog.myDislikes;
+
     Dog.find({ "_id": { $nin: [...myLikes, ...myDislikes, myDog._id] } }).then(result => {
       res.send(result);
     }).catch(err => res.status(400).json({ error: err }));
@@ -30,10 +32,12 @@ router.get('/match', veryToken, (req, res) => {
 // Request all dogs for foster
 router.get('/foster', veryToken, (req, res) => {
   const { _id: id } = req.user;
+
   Dog.findOne({ owner: id }).then(result => {
     const myDog = result;
     const myLikes = myDog.myLikes;
     const myDislikes = myDog.myDislikes;
+    
     Dog.find({
       $and: [
         { foster: true },
