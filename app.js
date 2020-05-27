@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Define routes
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/user');
-const dogsRouter = require('./routes/create-dog');
+const dogsRouter = require('./routes/dog');
 const likesRouter = require('./routes/like');
 const dislikesRouter = require('./routes/dislike');
 
