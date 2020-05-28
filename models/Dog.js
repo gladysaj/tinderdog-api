@@ -56,15 +56,18 @@ const dogSchema = new Schema({
     type: String,
     minlength: [50, "Description must be min 50 characters"],
   },
-  likes: {
+  liked: {
     type: [Schema.Types.ObjectId]
   },
-  myLikes: {
-    type: [Schema.Types.ObjectId],
-  },
-  myDislikes: {
-    type: [Schema.Types.ObjectId],
+  match: {
+    type: [Schema.Types.ObjectId]
   }
+  // myLikes: {
+  //   type: [Schema.Types.ObjectId],
+  // },
+  // myDislikes: {
+  //   type: [Schema.Types.ObjectId],
+  // }
 }, { timestamps: true });
 
 module.exports = model('Dog', dogSchema);
