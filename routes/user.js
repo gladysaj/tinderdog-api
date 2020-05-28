@@ -54,13 +54,15 @@ router.post("/logout", (req, res) => {
   res.clearCookie("token").json({ msg: "Logout" });
 });
 
-// Get de user dogs
-router.get('/find-dog', veryToken, function(req, res) {
+// Get user dogs
+router.get('/find-dog', veryToken, (req, res) => {
   const { _id: id } = req.user;
 
   Dog.find({ owner: id }).then(dogs => {
     res.status(200).json({dogs})
   }).catch(err => res.status(400).json({ err }));
 });
+
+// Need to add patch of user
 
 module.exports = router;
