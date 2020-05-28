@@ -55,7 +55,7 @@ router.post("/logout", (req, res) => {
 });
 
 // Get de user dogs
-router.get('/find-dog', veryToken, function(req, res, next) {
+router.get('/find-dog', veryToken, function(req, res) {
   const { _id: id } = req.user;
 
   Dog.find({ owner: id }).then(dogs => {
