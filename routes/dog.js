@@ -66,12 +66,34 @@ router.patch("/:id", veryToken, (req, res) => {
   const { id } = req.params;
 
   Dog.findByIdAndUpdate(id, req.body, { new: true })
-    .populate("owner", "name avatar")
     .then((dog) => {
       res.status(200).json({ result: dog });
     })
     .catch((err) => res.status(400).json(err));
 });
+
+// Like
+router.post("/only-like", veryToken, (req, res) => {
+  const { myDogId, likedDogId } = req.body;
+
+  Dog.findByIdAndUpdate(myDogId, {$push: {liked: likedDogId}}, {new: true}).then(dog => {
+    res.status(200).json({ msg: "Likeado", dog })
+  }).catch(err => res.status(400).json(err))
+})
+
+// Match
+router.post("/is-match", veryToken, (req, res) => {
+  const { myDogId, likedDogId } = req.body;
+  
+  Dog.findByIdAndUpdate(myDogId, {$push: {match: likedDogId}}, {new: true}).then(dog => {
+    
+    Dog.findByIdAndUpdate(likedDogId, {$push: {match: myDogId}}, {new: true}).then(dog => {
+      console.log("Algo pasó")
+    }).catch(err => console.log("Hubo un error"))
+
+    res.status(200).json({ msg: "Tienes un match!", dog })
+  }).catch(err => res.status(400).json(err))
+})
 
 // Delete dog
 router.delete("/:id", veryToken, (req, res) => {
