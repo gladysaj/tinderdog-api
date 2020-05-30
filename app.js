@@ -7,9 +7,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors')
 
-// const isProd = process.env.NODE_ENV === 'production' ? true : false;
-// const mongoUrl = isProd ? `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@waggys-m6jyb.mongodb.net/test?retryWrites=true&w=majority` : 'mongodb://localhost/tinderdog-backend';
-const mongoUrl = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@waggys-m6jyb.mongodb.net/test?retryWrites=true&w=majority`;
+const isProd = process.env.NODE_ENV === 'production' ? true : false;
+const mongoUrl = isProd ? `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@waggys-m6jyb.mongodb.net/test?retryWrites=true&w=majority` : 'mongodb://localhost/tinderdog-backend';
 
 // Add Mongoose Connections
 const mongoose = require("mongoose")
