@@ -7,19 +7,30 @@ const { veryToken } = require("../utils/auth");
 router.post("/create-dog", veryToken, (req, res) => {
   const { _id: owner } = req.user;
 
-  Dog.findOne({ owner: { $eq: owner } })
-    .then((result) => {
-      if (result === null) {
-        Dog.create({ ...req.body, owner })
-          .then((dog) => {
-            res.status(201).json({ result: dog });
-          })
-          .catch((err) => res.status(400).json(err));
-      } else {
-        res.status(401).json({ msg: "ya tienes un perro" });
-      }
-    })
-    .catch((err) => res.status(400).json({ error: err }));
+  Dog.findOne({owner: {$eq: owner}}).then(result => {
+    if(result === null) {
+      Dog.create({ ...req.body, owner })
+      .then((dog) => {
+        res.status(201).json({ result: dog });
+      })
+      .catch((err) => res.status(400).json(err));
+    } else {
+      res.status(401).json({ msg: "You have a dog already" })
+    }
+  }).catch(err => res.status(400).json({ error: err }));
+});
+
+// Get my dog profile
+router.get("/profile-dog", veryToken, (req, res) => {
+  const { _id: owner } = req.user;
+  
+  Dog.findOne({owner: {$eq: owner}}).then(result => {
+    if (result !== null) {
+      res.send(result);
+    } else {
+      res.status(400).json({ msg: "You do not have a dog" })
+    }
+  }).catch(err => res.status(400).json({ error: err }));
 });
 
 // Request all dogs for match
@@ -90,6 +101,13 @@ router.post("/is-match", veryToken, (req, res) => {
   }).catch(err => res.status(400).json(err))
 })
 
+<<<<<<< HEAD
+// My Matches
+router.get("/my-matches", veryToken, (req, res) => {
+
+})
+
+=======
 // // Get dog owner
 // router.get("/dog-owner", veryToken, (req, res) => {
 //   const { likedDogId } = req.body;
@@ -103,6 +121,7 @@ router.post("/is-match", veryToken, (req, res) => {
 //     })
 //     .catch((err) => res.status(400).json(err));
 // });
+>>>>>>> master
 
 // Delete dog
 router.delete("/:id", veryToken, (req, res) => {
