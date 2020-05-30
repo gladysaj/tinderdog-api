@@ -101,27 +101,10 @@ router.post("/is-match", veryToken, (req, res) => {
   }).catch(err => res.status(400).json(err))
 })
 
-<<<<<<< HEAD
 // My Matches
-router.get("/my-matches", veryToken, (req, res) => {
+// router.get("/my-matches", veryToken, (req, res) => {
+// })
 
-})
-
-=======
-// // Get dog owner
-// router.get("/dog-owner", veryToken, (req, res) => {
-//   const { likedDogId } = req.body;
-
-//   Dog.findById(likedDogId)
-//     .populate("owner", "name avatar phone")
-//     .then((dog) => {
-//       res.status(200).json({
-//         result: dog,
-//       });
-//     })
-//     .catch((err) => res.status(400).json(err));
-// });
->>>>>>> master
 
 // Delete dog
 router.delete("/:id", veryToken, (req, res) => {
