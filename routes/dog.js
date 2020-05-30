@@ -34,44 +34,37 @@ router.get("/profile-dog", veryToken, (req, res) => {
 });
 
 // Request all dogs for match
-router.get('/match', veryToken, (req, res) => {
+router.get("/match", veryToken, (req, res) => {
   const { _id: id } = req.user;
-  
-  Dog.findOne({owner: {$eq: id}}).then(result => {
-    const myDogGender = result.gender;
-    const oppositeGender = myDogGender === "Male" ? "Female" : "Male";
 
-    Dog.find({
-      owner:{$ne: id}, foster:false, gender:oppositeGender
-    }).then(result => {
-      res.send(result);
-    }).catch(err => res.status(400).json({ error: err }));
-  }).catch(err => res.status(400).json({ error: err }));
+  Dog.findOne({ owner: { $eq: id } })
+    .then((result) => {
+      const myDogGender = result.gender;
+      const oppositeGender = myDogGender === "Male" ? "Female" : "Male";
+
+      Dog.find({
+        owner: { $ne: id },
+        foster: false,
+        gender: oppositeGender,
+      })
+        .then((result) => {
+          res.send(result);
+        })
+        .catch((err) => res.status(400).json({ error: err }));
+    })
+    .catch((err) => res.status(400).json({ error: err }));
 });
 
-// router.get('/match', veryToken, (req, res) => {
-//   const { _id: id } = req.user;
-
-//   Dog.findOne({ owner: id }).then(result => {
-//     const myDog = result;
-//     const myLikes = myDog.myLikes;
-//     const myDislikes = myDog.myDislikes;
-
-//     Dog.find({ "_id": { $nin: [...myLikes, ...myDislikes, myDog._id] } }).then(result => {
-//       res.send(result);
-//     }).catch(err => res.status(400).json({ error: err }));
-//   }).catch(err => res.status(401).json({ error: err }));
-// });
-
 // Request all dogs for foster
-router.get('/foster', veryToken, (req, res) => {
+router.get("/foster", veryToken, (req, res) => {
   const { _id: id } = req.user;
     
     Dog.find({
       owner:{$ne: id}, foster:true
-    }).then(result => {
+    }).populate('owner', 'avatar name email phoneNumber').then(result => {
       res.send(result);
-    }).catch(err => res.status(400).json({ error: err }));
+    })
+    .catch((err) => res.status(400).json({ error: err }));
 });
 
 // Update dog
@@ -90,7 +83,7 @@ router.post("/only-like", veryToken, (req, res) => {
   const { myDogId, likedDogId } = req.body;
 
   Dog.findByIdAndUpdate(myDogId, {$push: {liked: likedDogId}}, {new: true}).then(dog => {
-    res.status(200).json({ msg: "Likeado", dog })
+    res.status(200).json({ msg: "Dog liked ❤️", dog })
   }).catch(err => res.status(400).json(err))
 })
 
@@ -101,18 +94,34 @@ router.post("/is-match", veryToken, (req, res) => {
   Dog.findByIdAndUpdate(myDogId, {$push: {match: likedDogId}}, {new: true}).then(dog => {
     
     Dog.findByIdAndUpdate(likedDogId, {$push: {match: myDogId}}, {new: true}).then(dog => {
-      console.log("Algo pasó")
-    }).catch(err => console.log("Hubo un error"))
+      console.log("Didn't match")
+    }).catch(err => console.log("There was an error"))
 
-    res.status(200).json({ msg: "Tienes un match!", dog })
+    res.status(200).json({ msg: "Nice! You have a match", dog })
   }).catch(err => res.status(400).json(err))
 })
 
+<<<<<<< HEAD
 // My Matches
 router.get("/my-matches", veryToken, (req, res) => {
 
 })
 
+=======
+// // Get dog owner
+// router.get("/dog-owner", veryToken, (req, res) => {
+//   const { likedDogId } = req.body;
+
+//   Dog.findById(likedDogId)
+//     .populate("owner", "name avatar phone")
+//     .then((dog) => {
+//       res.status(200).json({
+//         result: dog,
+//       });
+//     })
+//     .catch((err) => res.status(400).json(err));
+// });
+>>>>>>> master
 
 // Delete dog
 router.delete("/:id", veryToken, (req, res) => {
@@ -122,6 +131,17 @@ router.delete("/:id", veryToken, (req, res) => {
       res.status(200).json({
         result: dog,
       });
+    })
+    .catch((err) => res.status(400).json(err));
+});
+
+// Get dog matches
+router.get("/my-matches/:dog_id", veryToken, (req, res) => {
+  const { dog_id } = req.params;
+  Dog.findById(dog_id)
+    .populate("match")
+    .then((matches) => {
+      res.status(200).json({ result: matches });
     })
     .catch((err) => res.status(400).json(err));
 });
