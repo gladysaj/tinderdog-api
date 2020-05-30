@@ -15,7 +15,20 @@ router.post("/create-dog", veryToken, (req, res) => {
       })
       .catch((err) => res.status(400).json(err));
     } else {
-      res.status(401).json({ msg: "ya tienes un perro" })
+      res.status(401).json({ msg: "You have a dog already" })
+    }
+  }).catch(err => res.status(400).json({ error: err }));
+});
+
+// Get my dog profile
+router.get("/profile-dog", veryToken, (req, res) => {
+  const { _id: owner } = req.user;
+  
+  Dog.findOne({owner: {$eq: owner}}).then(result => {
+    if (result !== null) {
+      res.send(result);
+    } else {
+      res.status(400).json({ msg: "You do not have a dog" })
     }
   }).catch(err => res.status(400).json({ error: err }));
 });
@@ -94,6 +107,12 @@ router.post("/is-match", veryToken, (req, res) => {
     res.status(200).json({ msg: "Tienes un match!", dog })
   }).catch(err => res.status(400).json(err))
 })
+
+// My Matches
+router.get("/my-matches", veryToken, (req, res) => {
+
+})
+
 
 // Delete dog
 router.delete("/:id", veryToken, (req, res) => {
