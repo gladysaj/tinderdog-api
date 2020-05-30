@@ -62,12 +62,6 @@ const dogSchema = new Schema({
   match: {
     type: [Schema.Types.ObjectId]
   }
-  // myLikes: {
-  //   type: [Schema.Types.ObjectId],
-  // },
-  // myDislikes: {
-  //   type: [Schema.Types.ObjectId],
-  // }
 }, { timestamps: true });
 
 module.exports = model('Dog', dogSchema);
