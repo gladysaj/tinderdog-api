@@ -21,32 +21,34 @@ router.post("/signup", (req, res) => {
   });
 });
 
-// User Login 
+// User Login
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
 
-  User.findOne({ email }).then((user) => {
-    if (user === null) return res.status(404).json({ msg: "Invalid email" });
+  User.findOne({ email })
+    .then((user) => {
+      if (user === null) return res.status(404).json({ msg: "Invalid email" });
 
-    bcrypt.compare(password, user.password).then((match) => {
-      if (match) {
-        const userWithoutPassword = user.toObject();
-        delete userWithoutPassword.password;
-        const token = jwt.sign({ id: user._id }, process.env.SECRET, {
-          expiresIn: "1d",
-        });
-        res
-          .cookie("token", token, {
-            expires: new Date(Date.now() + 86400000),
-            secure: false,
-            httpOnly: true,
-          })
-          .json({ user: userWithoutPassword });
-      } else {
-         return res.status(401).json({ msg: "Invalid password"});
-      }
-    });
-  }) .catch((err) => res.status(400).json({ err }));
+      bcrypt.compare(password, user.password).then((match) => {
+        if (match) {
+          const userWithoutPassword = user.toObject();
+          delete userWithoutPassword.password;
+          const token = jwt.sign({ id: user._id }, process.env.SECRET, {
+            expiresIn: "1d",
+          });
+          res
+            .cookie("token", token, {
+              expires: new Date(Date.now() + 86400000),
+              secure: false,
+              httpOnly: true,
+            })
+            .json({ user: userWithoutPassword });
+        } else {
+          return res.status(401).json({ msg: "Invalid password" });
+        }
+      });
+    })
+    .catch((err) => res.status(400).json({ err }));
 });
 
 // User Logout
@@ -55,14 +57,27 @@ router.post("/logout", (req, res) => {
 });
 
 // Get user dogs
-router.get('/find-dog', veryToken, (req, res) => {
+router.get("/find-dog", veryToken, (req, res) => {
   const { _id: id } = req.user;
 
-  Dog.find({ owner: id }).then(dogs => {
-    res.status(200).json({dogs})
-  }).catch(err => res.status(400).json({ err }));
+  Dog.find({ owner: id })
+    .then((dogs) => {
+      res.status(200).json({ dogs });
+    })
+    .catch((err) => res.status(400).json({ err }));
 });
 
-// Need to add patch of user
+// User update
+router.post("/user-update/:id", (req, res) => {
+  const { id } = req.params;
+  console.log("nose", req.params);
+  User.findByIdAndUpdate(id, req.body, { new: true })
+    .then((user) => {
+      res.status(200).json({
+        result: user,
+      });
+    })
+    .catch((err) => res.status(400).json(err));
+});
 
 module.exports = router;
